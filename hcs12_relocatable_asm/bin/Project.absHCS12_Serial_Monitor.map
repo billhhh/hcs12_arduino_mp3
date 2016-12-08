@@ -1,0 +1,152 @@
+*** EVALUATION ***
+PROGRAM "E:\gitbill\hcs12_arduino_mp3\hcs12_relocatable_asm\bin\Project.absHCS12_Serial_Monitor.abs"
+
+*********************************************************************************************
+TARGET SECTION
+---------------------------------------------------------------------------------------------
+Processor   : Freescale HC12
+Memory Model: SMALL
+File Format : ELF\DWARF 2.0
+Linker      : SmartLinker V-5.0.40 Build 10203, Jul 23 2010
+
+*********************************************************************************************
+FILE SECTION
+---------------------------------------------------------------------------------------------
+serialcom_keypad.asm.o                  Model: SMALL,         Lang: Assembler
+
+*********************************************************************************************
+STARTUP SECTION
+---------------------------------------------------------------------------------------------
+Entry point: 0x4000 (Entry)
+
+*********************************************************************************************
+SECTION-ALLOCATION SECTION
+Section Name                    Size  Type     From       To       Segment
+---------------------------------------------------------------------------------------------
+.stack                           256   R/W     0x1000     0x10FF   RAM
+serialcom_keypad.asm__ORG00001         16     R     0x1000     0x100F   .absSeg0
+serialcom_keypad.asm__ORG00002          3   R/W     0x1110     0x1112   .absSeg1
+serialcom_keypad.asm__ORG00003        247     R     0x4000     0x40F6   .absSeg2
+.vectSeg3_vect                     2     R     0xFFFE     0xFFFF   .vectSeg3
+
+Summary of section sizes per section type:
+READ_ONLY (R):         109 (dec:      265)
+READ_WRITE (R/W):      103 (dec:      259)
+
+*********************************************************************************************
+VECTOR-ALLOCATION SECTION
+    Address     InitValue   InitFunction
+---------------------------------------------------------------------------------------------
+     0xFFFE        0x4000   Entry
+
+*********************************************************************************************
+OBJECT-ALLOCATION SECTION
+     Name               Module                 Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+MODULE:                 -- serialcom_keypad.asm.o --
+- PROCEDURES:
+     Entry                                     4000      31      49       0   .init       
+     K1                                        4031       C      12       0   .init       
+     K2                                        403D       D      13       0   .init       
+     OVER                                      404A       D      13       0   .init       
+     OVER1                                     4057       9       9       0   .init       
+     P1                                        4060      16      22       0   .init       
+     P2                                        4076      16      22       0   .init       
+     P3                                        408C      16      22       0   .init       
+     P4                                        40A2       F      15       0   .init       
+     R0                                        40B1       5       5       0   .init       
+     R1                                        40B6       5       5       0   .init       
+     R2                                        40BB       5       5       0   .init       
+     R3                                        40C0       5       5       0   .init       
+     FIND                                      40C5       3       3       0   .init       
+     SHIFT                                     40C8       6       6       0   .init       
+     MATCH                                     40CE       9       9       0   .init       
+     DELAY                                     40D7       5       5       0   .init       
+     D2                                        40DC       5       5       0   .init       
+     D1                                        40E1       D      13       0   .init       
+     TRANS1                                    40EE       7       7       0   .init       
+     HERE                                      40EE       0       0       0   .init       
+     VAR00001                                  40F5       2       2       0   .init       
+- VARIABLES:
+     KCODE0                                    1000       4       4       0   .text       
+     KCODE1                                    1004       4       4       0   .text       
+     KCODE2                                    1008       4       4       0   .text       
+     KCODE3                                    100C       4       4       0   .text       
+     DR15mH                                    1110       1       1       0   .text       
+     DR15mL                                    1111       1       1       0   .text       
+     PDELAY                                    1112       1       1       0   .text       
+
+*********************************************************************************************
+MODULE STATISTIC
+  Name                                      Data   Code  Const
+---------------------------------------------------------------------------------------------
+  serialcom_keypad.asm.o                       3    247     16
+  other                                      256      2      0
+
+*********************************************************************************************
+SECTION USE IN OBJECT-ALLOCATION SECTION
+---------------------------------------------------------------------------------------------
+SECTION: ".text"
+  KCODE0 KCODE1 KCODE2 KCODE3 DR15mH DR15mL PDELAY 
+SECTION: ".init"
+  Entry K1 K2 OVER OVER1 P1 P2 P3 P4 R0 R1 R2 R3 FIND SHIFT MATCH DELAY D2 D1 
+  HERE TRANS1 VAR00001 
+
+*********************************************************************************************
+OBJECT LIST SORTED BY ADDRESS
+     Name                                      Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+     KCODE0                                    1000       4       4       0   .text       
+     KCODE1                                    1004       4       4       0   .text       
+     KCODE2                                    1008       4       4       0   .text       
+     KCODE3                                    100C       4       4       0   .text       
+     DR15mH                                    1110       1       1       0   .text       
+     DR15mL                                    1111       1       1       0   .text       
+     PDELAY                                    1112       1       1       0   .text       
+     Entry                                     4000      31      49       0   .init       
+     K1                                        4031       C      12       0   .init       
+     K2                                        403D       D      13       0   .init       
+     OVER                                      404A       D      13       0   .init       
+     OVER1                                     4057       9       9       0   .init       
+     P1                                        4060      16      22       0   .init       
+     P2                                        4076      16      22       0   .init       
+     P3                                        408C      16      22       0   .init       
+     P4                                        40A2       F      15       0   .init       
+     R0                                        40B1       5       5       0   .init       
+     R1                                        40B6       5       5       0   .init       
+     R2                                        40BB       5       5       0   .init       
+     R3                                        40C0       5       5       0   .init       
+     FIND                                      40C5       3       3       0   .init       
+     SHIFT                                     40C8       6       6       0   .init       
+     MATCH                                     40CE       9       9       0   .init       
+     DELAY                                     40D7       5       5       0   .init       
+     D2                                        40DC       5       5       0   .init       
+     D1                                        40E1       D      13       0   .init       
+     HERE                                      40EE       0       0       0   .init       
+     TRANS1                                    40EE       7       7       0   .init       
+     VAR00001                                  40F5       2       2       0   .init       
+
+*********************************************************************************************
+UNUSED-OBJECTS SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+COPYDOWN SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-DEPENDENCIES SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+DEPENDENCY TREE
+*********************************************************************************************
+*********************************************************************************************
+STATISTIC SECTION
+---------------------------------------------------------------------------------------------
+
+ExeFile:
+--------
+Number of blocks to be downloaded: 3
+Total size of all blocks to be downloaded: 265
+
