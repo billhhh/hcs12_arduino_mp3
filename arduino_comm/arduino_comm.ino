@@ -51,6 +51,9 @@ void loop() { // run over and over
 
   if (Serial.available()) {
     data = Serial.read();
+    
+    MP3player.stopTrack();
+    
     digitalWrite(13, HIGH);
     delay(1000);
     Serial.println(data);
