@@ -1,4 +1,13 @@
-*** EVALUATION ***
+*** EVALUATION ************************************************************************************************
+*********************************************************************************************
+LINKING FAILED
+The linking process failed in some stage.
+Depending on the phase the linker failed, part of the information contained in this map file may be inaccurate or wrong.
+If the linking failed before the allocation phase finished, then the addresses might be inaccurate.
+Also summary information like the code size is likely to be misleading.
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+
 PROGRAM "E:\gitbill\hcs12_arduino_mp3\hcs12_cpp_mp3\bin\Project.absHCS12_Serial_Monitor.abs"
 
 *********************************************************************************************
@@ -23,7 +32,7 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC015 and uses 14 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x1100     2
+  _Range   pZeroOut       0x1100     392
   _Copy    *toCopyDownBeg 0xC037
   int      nofInitBodies  0
   _Cpp     *initBodies    0xC027
@@ -38,9 +47,10 @@ Section Name                    Size  Type     From       To       Segment
 .init                             21     R     0xC000     0xC014   ROM_C000
 .startData                        18     R     0xC015     0xC026   ROM_C000
 .rodata                           16     R     0xC027     0xC036   ROM_C000
-.copy                              2     R     0xC037     0xC038   ROM_C000
-.text                            317     R   0x308000   0x30813C   PAGE_30
+.copy                            310     R     0xC037     0xC16C   ROM_C000
+.text                            709     R   0x308000   0x3082C4   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
+.data                            390   R/W     0x1100     0x1285   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -382,12 +392,12 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_17e                   2   N/I      0x17E      0x17F   .absSeg338
 .abs_section_2ae                   2   N/I      0x2AE      0x2AF   .absSeg339
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg340
-.common                            2   R/W     0x1100     0x1101   RAM
+.common                            2   R/W     0x1286     0x1287   RAM
 .vectSeg341_vect                   2     R     0xFFFE     0xFFFF   .vectSeg341
 
 Summary of section sizes per section type:
-READ_ONLY (R):         178 (dec:      376)
-READ_WRITE (R/W):      102 (dec:      258)
+READ_ONLY (R):         434 (dec:     1076)
+READ_WRITE (R/W):      288 (dec:      648)
 NO_INIT (N/I):         190 (dec:      400)
 
 *********************************************************************************************
@@ -429,8 +439,8 @@ MODULE:                 -- mc9s12dg256.c.o --
      _BKP1H                                      2E       1       1       0   .abs_section_2e
      _BKP1L                                      2F       1       1       0   .abs_section_2f
      _PPAGE                                      30       1       1       0   .abs_section_30
-     _PORTK                                      32       1       1       0   .abs_section_32
-     _DDRK                                       33       1       1       0   .abs_section_33
+     _PORTK                                      32       1       1      16   .abs_section_32
+     _DDRK                                       33       1       1       1   .abs_section_33
      _SYNR                                       34       1       1       0   .abs_section_34
      _REFDV                                      35       1       1       0   .abs_section_35
      _CRGFLG                                     37       1       1       0   .abs_section_37
@@ -486,10 +496,10 @@ MODULE:                 -- mc9s12dg256.c.o --
      _SCI0DRL                                    CF       1       1       0   .abs_section_cf
      _SCI1CR1                                    D2       1       1       1   .abs_section_d2
      _SCI1CR2                                    D3       1       1       1   .abs_section_d3
-     _SCI1SR1                                    D4       1       1       1   .abs_section_d4
+     _SCI1SR1                                    D4       1       1       0   .abs_section_d4
      _SCI1SR2                                    D5       1       1       0   .abs_section_d5
      _SCI1DRH                                    D6       1       1       0   .abs_section_d6
-     _SCI1DRL                                    D7       1       1       1   .abs_section_d7
+     _SCI1DRL                                    D7       1       1       0   .abs_section_d7
      _SPI0CR1                                    D8       1       1       0   .abs_section_d8
      _SPI0CR2                                    D9       1       1       0   .abs_section_d9
      _SPI0BR                                     DA       1       1       0   .abs_section_da
@@ -754,13 +764,16 @@ MODULE:                 -- Start12.cpp.o --
      __SEG_END_SSTACK                          1100       0       0       1               
 MODULE:                 -- com_main.cpp.o --
 - PROCEDURES:
-     main                                    30803E      D7     215       7   .text       
-     SerTx1__FUc                             308115       9       9       2   .text       
-     mSDelay__FUi                            30811E      1F      31       6   .text       
+     main                                    30803E     1C9     457      31   .text       
+     COMWRT4__FUc                            308207      4B      75       6   .text       
+     DATWRT4__FUc                            308252      4B      75       2   .text       
+     SerTx1__FUc                             30829D       9       9       2   .text       
+     MSDelay__FUi                            3082A6      1F      31       6   .text       
 - VARIABLES:
      keypad                                    C027      10      16       4   .rodata     
-     column                                    1100       1       1       6   .common     
-     row                                       1101       1       1       3   .common     
+     songName                                  1100     186     390       2   .data       
+     column                                    1286       1       1      12   .common     
+     row                                       1287       1       1       3   .common     
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -768,14 +781,16 @@ MODULE STATISTIC
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
   Start12.cpp.o                                0     83      0
-  com_main.cpp.o                               2    255     16
-  other                                      256     20      2
+  com_main.cpp.o                             392    647     16
+  other                                      256     20    310
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  Init__Fv main SerTx1__FUc mSDelay__FUi 
+  Init__Fv main COMWRT4__FUc DATWRT4__FUc SerTx1__FUc MSDelay__FUi 
+SECTION: ".data"
+  songName 
 SECTION: ".init"
   _Startup 
 SECTION: ".rodata"
@@ -1498,8 +1513,8 @@ OBJECT LIST SORTED BY ADDRESS
      _BKP1H                                      2E       1       1       0   .abs_section_2e
      _BKP1L                                      2F       1       1       0   .abs_section_2f
      _PPAGE                                      30       1       1       0   .abs_section_30
-     _PORTK                                      32       1       1       0   .abs_section_32
-     _DDRK                                       33       1       1       0   .abs_section_33
+     _PORTK                                      32       1       1      16   .abs_section_32
+     _DDRK                                       33       1       1       1   .abs_section_33
      _SYNR                                       34       1       1       0   .abs_section_34
      _REFDV                                      35       1       1       0   .abs_section_35
      _CRGFLG                                     37       1       1       0   .abs_section_37
@@ -1597,10 +1612,10 @@ OBJECT LIST SORTED BY ADDRESS
      _SCI1BD                                     D0       2       2       2   .abs_section_d0
      _SCI1CR1                                    D2       1       1       1   .abs_section_d2
      _SCI1CR2                                    D3       1       1       1   .abs_section_d3
-     _SCI1SR1                                    D4       1       1       1   .abs_section_d4
+     _SCI1SR1                                    D4       1       1       0   .abs_section_d4
      _SCI1SR2                                    D5       1       1       0   .abs_section_d5
      _SCI1DRH                                    D6       1       1       0   .abs_section_d6
-     _SCI1DRL                                    D7       1       1       1   .abs_section_d7
+     _SCI1DRL                                    D7       1       1       0   .abs_section_d7
      _SPI0CR1                                    D8       1       1       0   .abs_section_d8
      _SPI0CR2                                    D9       1       1       0   .abs_section_d9
      _SPI0BR                                     DA       1       1       0   .abs_section_da
@@ -1810,14 +1825,17 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
-     column                                    1100       1       1       6   .common     
-     row                                       1101       1       1       3   .common     
+     songName                                  1100     186     390       2   .data       
+     column                                    1286       1       1      12   .common     
+     row                                       1287       1       1       3   .common     
      _Startup                                  C000      15      21       0   .init       
      keypad                                    C027      10      16       4   .rodata     
      Init__Fv                                308000      3E      62       2   .text       
-     main                                    30803E      D7     215       7   .text       
-     SerTx1__FUc                             308115       9       9       2   .text       
-     mSDelay__FUi                            30811E      1F      31       6   .text       
+     main                                    30803E     1C9     457      31   .text       
+     COMWRT4__FUc                            308207      4B      75       6   .text       
+     DATWRT4__FUc                            308252      4B      75       2   .text       
+     SerTx1__FUc                             30829D       9       9       2   .text       
+     MSDelay__FUi                            3082A6      1F      31       6   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -1826,7 +1844,96 @@ UNUSED-OBJECTS SECTION
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC037 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC037 ---- SIZE       4 ---
+Filling bytes inserted
+ 00071100
+------- ROM-ADDRESS: 0xC03B ---- RAM-ADDRESS: 0x1100 ---- SIZE       7 ---
+Name of initialized Object : songName
+ 313A206661 7465
+------- ROM-ADDRESS: 0xC042 ---- SIZE       4 ---
+Filling bytes inserted
+ 0015111E
+------- ROM-ADDRESS: 0xC046 ---- RAM-ADDRESS: 0x111E ---- SIZE      21 ---
+Name of initialized Object : songName:30
+ 323A205368 6F636B204D 6520696E74
+ 6F204C6F76 65
+------- ROM-ADDRESS: 0xC05B ---- SIZE       4 ---
+Filling bytes inserted
+ 0051113C
+------- ROM-ADDRESS: 0xC05F ---- RAM-ADDRESS: 0x113C ---- SIZE      23 ---
+Name of initialized Object : songName:60
+ 333A206C6F 6E656C7920 6E6F727468
+ 656E206561 727468
+------- ROM-ADDRESS: 0xC076 ---- SIZE       7 ---
+Filling bytes inserted
+ 0000000000 0000
+------- ROM-ADDRESS: 0xC07D ---- RAM-ADDRESS: 0x115A ---- SIZE      26 ---
+Name of initialized Object : songName:90
+ 343A206D6F 737420696D 706F727461
+ 6E74206469 636973696F 6E
+------- ROM-ADDRESS: 0xC097 ---- SIZE       4 ---
+Filling bytes inserted
+ 00000000
+------- ROM-ADDRESS: 0xC09B ---- RAM-ADDRESS: 0x1178 ---- SIZE      21 ---
+Name of initialized Object : songName:120
+ 353A204265 6175746966 756C20496E
+ 2057686974 65
+------- ROM-ADDRESS: 0xC0B0 ---- SIZE       4 ---
+Filling bytes inserted
+ 00101196
+------- ROM-ADDRESS: 0xC0B4 ---- RAM-ADDRESS: 0x1196 ---- SIZE      16 ---
+Name of initialized Object : songName:150
+ 363A204C6F 7665205061 7261646973
+ 65
+------- ROM-ADDRESS: 0xC0C4 ---- SIZE       4 ---
+Filling bytes inserted
+ 000911B4
+------- ROM-ADDRESS: 0xC0C8 ---- RAM-ADDRESS: 0x11B4 ---- SIZE       9 ---
+Name of initialized Object : songName:180
+ 373A204C61 70757461
+------- ROM-ADDRESS: 0xC0D1 ---- SIZE       4 ---
+Filling bytes inserted
+ 002E11D2
+------- ROM-ADDRESS: 0xC0D5 ---- RAM-ADDRESS: 0x11D2 ---- SIZE      26 ---
+Name of initialized Object : songName:210
+ 383A204E6F 7468696E67 277320476F
+ 6E6E612043 68616E6765 20
+------- ROM-ADDRESS: 0xC0EF ---- SIZE       4 ---
+Filling bytes inserted
+ 00000000
+------- ROM-ADDRESS: 0xC0F3 ---- RAM-ADDRESS: 0x11F0 ---- SIZE      16 ---
+Name of initialized Object : songName:240
+ 393A206472 65616D2077 656464696E
+ 67
+------- ROM-ADDRESS: 0xC103 ---- SIZE       4 ---
+Filling bytes inserted
+ 0031120E
+------- ROM-ADDRESS: 0xC107 ---- RAM-ADDRESS: 0x120E ---- SIZE      22 ---
+Name of initialized Object : songName:270
+ 31303A2052 6967687420 4865726520
+ 5761697469 6E67
+------- ROM-ADDRESS: 0xC11D ---- SIZE       8 ---
+Filling bytes inserted
+ 0000000000 000000
+------- ROM-ADDRESS: 0xC125 ---- RAM-ADDRESS: 0x122C ---- SIZE      19 ---
+Name of initialized Object : songName:300
+ 31313A204E 6F7720416E 6420466F72
+ 65766572
+------- ROM-ADDRESS: 0xC138 ---- SIZE       4 ---
+Filling bytes inserted
+ 002F124A
+------- ROM-ADDRESS: 0xC13C ---- RAM-ADDRESS: 0x124A ---- SIZE      23 ---
+Name of initialized Object : songName:330
+ 31323A2049 204C6F7665 20596F7520
+ 546F6F204D 756368
+------- ROM-ADDRESS: 0xC153 ---- SIZE       7 ---
+Filling bytes inserted
+ 0000000000 0000
+------- ROM-ADDRESS: 0xC15A ---- RAM-ADDRESS: 0x1268 ---- SIZE      17 ---
+Name of initialized Object : songName:360
+ 31333A2053 206F66204D 7920486561
+ 7274
+------- ROM-ADDRESS: 0xC16B ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -1836,8 +1943,11 @@ OBJECT-DEPENDENCIES SECTION
 _Startup                  USES __SEG_END_SSTACK Init__Fv main 
 Init__Fv                  USES _startupData 
 main                      USES _SCI1BD _SCI1CR1 _SCI1CR2 _DDRAB _DDRJ _PTJ 
-                                _DDRP _PTP _PORTAB main mSDelay__FUi column row 
-                                keypad SerTx1__FUc 
+                                _DDRP _PTP _DDRK COMWRT4__FUc main _PORTAB column 
+                                row keypad songName DATWRT4__FUc SerTx1__FUc 
+                                MSDelay__FUi 
+COMWRT4__FUc              USES _PORTK MSDelay__FUi 
+DATWRT4__FUc              USES _PORTK MSDelay__FUi 
 SerTx1__FUc               USES _SCI1SR1 _SCI1DRL 
 
 *********************************************************************************************
@@ -1847,10 +1957,18 @@ DEPENDENCY TREE
  | 
  +- main                
  |  | 
- |  +- mSDelay__FUi        
- |  |    
+ |  +- COMWRT4__FUc        
+ |  |  | 
+ |  |  +- MSDelay__FUi        
+ |  |       
+ |  +- DATWRT4__FUc        
+ |  |  | 
+ |  |  +- MSDelay__FUi         (see above)
+ |  |     
  |  +- SerTx1__FUc         
- |       
+ |  |    
+ |  +- MSDelay__FUi         (see above)
+ |     
  +- _Startup            
     | 
     +- Init__Fv            
@@ -1863,6 +1981,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 376
+Number of blocks to be downloaded: 0
+Total size of all blocks to be downloaded: 0
 

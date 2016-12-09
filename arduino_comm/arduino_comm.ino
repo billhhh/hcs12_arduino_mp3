@@ -65,7 +65,7 @@ void loop() { // run over and over
     }
 
     else {
-      MP3player.playTrack(data - 55);
+      MP3player.playTrack(data - 54);
       delay(2000);
     }
   }
