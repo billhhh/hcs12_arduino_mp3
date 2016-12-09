@@ -1,7 +1,7 @@
 ;****************************************************************************************
 ;*TITLE:  serialcom_keypad.ASM                                                                    *
-;*AUTHOR: Hu Wang                                                               *
-;*DATE:   12-01-16                                                                      *
+;*AUTHOR: Bill Wang                                                               *
+;*DATE:   12-05-16                                                                      *
 ;*        Code modified for Dragon 12+ board derived from example 12.4 of                *
 ;*        HCS12 Microconntroller and Embedded Systems                                   *
 ;*        by: Mazidi and Causy                                                          *
