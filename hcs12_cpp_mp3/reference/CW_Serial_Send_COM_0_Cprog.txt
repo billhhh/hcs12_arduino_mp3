@@ -1,0 +1,48 @@
+//Sending "YES" to Hyperterminal (Tera Terminal) via Serial Com0 (SCI0) on Dragon12+ board
+//Serial COM0 (SCI0) is the RS232 next to the LCD.
+//Serial COM0 (SCI0) is used by the Serial Monitor to communicate (downLOAD and RUN) with the Trainer board 
+//Modfied from Example 10-9C in HCS12 book by Mazidi & Causey
+//This program must be downloaded into Dragon12 via COM0 using HCS12 Serial Monitor
+//Use the usual steps in CodeWarrior. a) Make (F7) b) Set SW7 =00 (LOAD) position, c)use Debug (F5) to download.  
+//After it is downloaded, d)close the Debugger Windows of CodeWarrior from step C, and e) set SW7=10 (RUN) position
+//(f) bring up HyperTerminal (or Tera Term in Windows Vista and Windows 7), 
+//and g) press RESET on the Dragon12 board and it will run this program. 
+//(h) to download another program, close the HyperTerminal and set SW7=00 for LOAD.   
+
+//Serial Monitor uses COM0 to download (LOAD,SW7=00) and works at 48 MHz
+//The RUN mode (SW7=10) of Dragon12+ works at 8 MHz.
+//We use COM0 to download using Serial Monitor 
+//and then switch to RUN to send data to HyperTerminal using the same COM0 
+
+#include <hidef.h>      /* common defines and macros */
+#include "derivative.h"      /* derivative-specific definitions */
+
+
+void SerTx0(unsigned char);
+
+void main(void) 
+{
+  /* put your own code here */
+ 
+                    //The RUN mode (SW7=10) of Dragon12+ works at 8MHz.
+    SCI0BDH=0x00;   //Serial Monitor used for LOAD works at 48MHz  
+    SCI0BDL=26;     //8MHz/2=4MHz, 4MHz/16=250,000 and 250,000/9600=26 
+    SCI0CR1=0x00;
+    SCI0CR2=0x0C;
+    for(;;)
+      {
+        SerTx0('Y');
+        SerTx0('E');
+        SerTx0('S');
+        SerTx0(' ');
+        
+      }
+
+}
+
+ 
+void SerTx0(unsigned char c)  //SCI0 (COM0 of HCS12 chip)
+  {
+    while(!(SCI0SR1 & 0x80));  //make sure the last bit is gone
+    SCI0DRL=c;		       //before giving it another byte	
+  }

@@ -1,0 +1,126 @@
+//*********************************************************
+//Title:    Keypad input to PORTB LED 
+//          Based on Example 12.4C                        *
+//          HCS12 Microcontroller And Embedded Systems    *
+//          Using Assembly and C with CodeWarrior         *
+//          1st Edition                                   *
+//          by Mazidi & Causey          
+//Modified and tested by Travis Chandler                               
+//Platform: Wytec Dragon12 plus Dev board                 *
+//Compiler: Feescale CodeWarrior IDE v5.9.0               *
+
+//*********************************************************
+//On Dragon12+ board, the rows and columns of 4x4 keypad are connected to PORTA. 
+//See page 26 of Dragon12+ User's Manual
+//As you press any key the ASCII value for the key is placed on the LEDs of PORTB
+
+#include <hidef.h>      /* common defines and macros */
+#include "derivative.h"      /* derivative-specific definitions */
+
+void mSDelay(unsigned int);
+
+const unsigned char keypad[4][4] =
+{
+'1','2','3','A',
+'4','5','6','B',
+'7','8','9','C',
+'*','0','#','D'
+};
+unsigned char column,row;
+
+/**************MAIN*******************************/
+void main(void){                          //OPEN MAIN
+   DDRB = 0xFF;                           //MAKE PORTB OUTPUT
+   DDRJ |=0x02; 
+   PTJ &=~0x02;                            //ACTIVATE LED ARRAY ON PORT B
+   DDRP |=0x0F;                           //
+   PTP |=0x0F;                            //TURN OFF 7SEG LED
+   DDRA = 0x0F;                           //MAKE ROWS INPUT AND COLUMNS OUTPUT
+   
+ 
+   while(1){                              //OPEN WHILE(1)
+      do{                                 //OPEN do1
+         PORTA = PORTA | 0x0F;            //COLUMNS SET HIGH
+         row = PORTA & 0xF0;              //READ ROWS
+      }while(row == 0x00);                //WAIT UNTIL KEY PRESSED //CLOSE do1
+
+
+
+      do{                                 //OPEN do2
+         do{                              //OPEN do3
+            mSDelay(1);                   //WAIT
+            row = PORTA & 0xF0;           //READ ROWS
+         }while(row == 0x00);             //CHECK FOR KEY PRESS //CLOSE do3
+         
+         mSDelay(15);                     //WAIT FOR DEBOUNCE
+         row = PORTA & 0xF0;
+      }while(row == 0x00);                //FALSE KEY PRESS //CLOSE do2
+
+      while(1){                           //OPEN while(1)
+         PORTA &= 0xF0;                   //CLEAR COLUMN
+         PORTA |= 0x01;                   //COLUMN 0 SET HIGH
+         row = PORTA & 0xF0;              //READ ROWS
+         if(row != 0x00){                 //KEY IS IN COLUMN 0
+            column = 0;
+            break;                        //BREAK OUT OF while(1)
+         }
+         PORTA &= 0xF0;                   //CLEAR COLUMN
+         PORTA |= 0x02;                   //COLUMN 1 SET HIGH
+         row = PORTA & 0xF0;              //READ ROWS
+         if(row != 0x00){                 //KEY IS IN COLUMN 1
+            column = 1;
+            break;                        //BREAK OUT OF while(1)
+         }
+
+         PORTA &= 0xF0;                   //CLEAR COLUMN
+         PORTA |= 0x04;                   //COLUMN 2 SET HIGH
+         row = PORTA & 0xF0;              //READ ROWS
+         if(row != 0x00){                 //KEY IS IN COLUMN 2
+            column = 2;
+            break;                        //BREAK OUT OF while(1)
+         }
+         PORTA &= 0xF0;                   //CLEAR COLUMN
+         PORTA |= 0x08;                   //COLUMN 3 SET HIGH
+         row = PORTA & 0xF0;              //READ ROWS
+         if(row != 0x00){                 //KEY IS IN COLUMN 3
+            column = 3;
+            break;                        //BREAK OUT OF while(1)
+         }
+         row = 0;                         //KEY NOT FOUND
+      break;                              //step out of while(1) loop to not get stuck
+      }                                   //end while(1)
+
+      if(row == 0x10){
+         PORTB=keypad[0][column];         //OUTPUT TO PORTB LED
+ 
+      }
+      else if(row == 0x20){
+         PORTB=keypad[1][column];
+ 
+      }
+      else if(row == 0x40){
+         PORTB=keypad[2][column];
+ 
+      }
+      else if(row == 0x80){
+         PORTB=keypad[3][column];
+ 
+      }
+
+      do{
+         mSDelay(15);
+         PORTA = PORTA | 0x0F;            //COLUMNS SET HIGH
+         row = PORTA & 0xF0;              //READ ROWS
+      }while(row != 0x00);                //MAKE SURE BUTTON IS NOT STILL HELD
+   }                                      //CLOSE WHILE(1)
+}                                         //CLOSE MAIN
+
+
+
+/**********************SUBROUTINES***********/
+
+void mSDelay(unsigned int itime){
+unsigned int i; unsigned int j;
+   for(i=0;i<itime;i++)
+      for(j=0;j<4000;j++);
+}

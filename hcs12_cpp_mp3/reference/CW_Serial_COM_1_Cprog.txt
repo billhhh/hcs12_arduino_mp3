@@ -1,0 +1,49 @@
+//Sending "YES" to Hyperterminal via Serial Com1 (SCI1) on Dragon12+ board
+//Serial COM1 (SCI1) is the RS232 next to the power connection, and COM0(SCI0)is next LCD. 
+//You need two x86 PCs for this program 
+//PC#1 for CodeWarrior/Serial Monitor uses COM0 to communicate(download/run) with Dragon12 board, 
+//PC#2 for HyperTerminal to display data via COM1  
+//Modfied from Example 10-9C in HCS12 book by Mazidi & Causey
+//This program must be downloaded into Dragon12 via COM0 (SCI0) using HCS12 Serial Monitor
+//Use the usual steps in CodeWarior. a) Make (F7) b) Set SW7 =00 (LOAD) position, 
+//(c)use Debug (F5) to download.  
+//After it is downloaded, d) connect the 2nd x86 PC serial port to COM1 of Dragon12+ board
+//bring up e)HyperTerminal (or Tera Term in Windows Vista and Windows 7) on the 2nd x86 PC, 
+//and f)press F5 in Debug step C to start running this program via Serial Monitor.     
+
+//Serial Monitor uses COM0 to download (LOAD,SW7=00) and works at 48 MHz
+//We use COM0(SCI0) to download and run using Serial Monitor on the main x86 PC 
+//and use COM1(SCI1)to connect to the 2nd x86 PC to display data on HyperTerminal at the same time. 
+//The program sends "YES" to HyperTerminal of the 2nd x86 PC via COM1(SCI1)
+   
+
+#include <hidef.h>      /* common defines and macros */
+#include "derivative.h"      /* derivative-specific definitions */
+
+
+void SerTx1(unsigned char);
+
+void main(void) {
+  /* put your own code here */
+ 
+
+    SCI1BDH=0x00;    //48MHz/2=24Mhz, 24Mhz/16= 1.5MHz, 1.5MHz/9600=156
+    SCI1BDL=156;     //Notice the value for Baud Rate
+    SCI1CR1=0x00;
+    SCI1CR2=0x0C;
+    for(;;)
+      {
+        SerTx1('Y');
+        SerTx1('E');
+        SerTx1('S');
+        SerTx1(' ');
+       
+      }
+  
+
+}
+ void SerTx1(unsigned char c)
+  {
+    while(!(SCI1SR1 & 0x80));
+    SCI1DRL=c;
+  }
