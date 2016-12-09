@@ -25,13 +25,13 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .stack                           256   R/W     0x1000     0x10FF   RAM
 serialcom_keypad.asm__ORG00001         16     R     0x1000     0x100F   .absSeg0
-serialcom_keypad.asm__ORG00002          3   R/W     0x1110     0x1112   .absSeg1
-serialcom_keypad.asm__ORG00003        247     R     0x4000     0x40F6   .absSeg2
+serialcom_keypad.asm__ORG00002         21     R     0x1110     0x1124   .absSeg1
+serialcom_keypad.asm__ORG00003        525     R     0x4000     0x420C   .absSeg2
 .vectSeg3_vect                     2     R     0xFFFE     0xFFFF   .vectSeg3
 
 Summary of section sizes per section type:
-READ_ONLY (R):         109 (dec:      265)
-READ_WRITE (R/W):      103 (dec:      259)
+READ_ONLY (R):         234 (dec:      564)
+READ_WRITE (R/W):      100 (dec:      256)
 
 *********************************************************************************************
 VECTOR-ALLOCATION SECTION
@@ -66,7 +66,21 @@ MODULE:                 -- serialcom_keypad.asm.o --
      D1                                        40E1       D      13       0   .init       
      TRANS1                                    40EE       7       7       0   .init       
      HERE                                      40EE       0       0       0   .init       
-     VAR00001                                  40F5       2       2       0   .init       
+     COMWRT4                                   40F5      2B      43       0   .init       
+     DATWRT4                                   4120      2B      43       0   .init       
+     DELAYLCD                                  414B       6       6       0   .init       
+     L3                                        4151       5       5       0   .init       
+     L2                                        4156       5       5       0   .init       
+     L1                                        415B      14      20       0   .init       
+     DELAY75                                   416F       6       6       0   .init       
+     LL3                                       4175       5       5       0   .init       
+     LL2                                       417A       5       5       0   .init       
+     LL1                                       417F      55      85       0   .init       
+     LOOP                                      41D4       D      13       0   .init       
+     REMAIN                                    41E1       5       5       0   .init       
+     OVER2                                     41E6       6       6       0   .init       
+     LOOP2                                     41EC      1F      31       0   .init       
+     VAR00001                                  420B       2       2       0   .init       
 - VARIABLES:
      KCODE0                                    1000       4       4       0   .text       
      KCODE1                                    1004       4       4       0   .text       
@@ -75,22 +89,24 @@ MODULE:                 -- serialcom_keypad.asm.o --
      DR15mH                                    1110       1       1       0   .text       
      DR15mL                                    1111       1       1       0   .text       
      PDELAY                                    1112       1       1       0   .text       
+     NAME                                      1113      12      18       0   .text       
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  serialcom_keypad.asm.o                       3    247     16
+  serialcom_keypad.asm.o                       0    525     37
   other                                      256      2      0
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  KCODE0 KCODE1 KCODE2 KCODE3 DR15mH DR15mL PDELAY 
+  KCODE0 KCODE1 KCODE2 KCODE3 DR15mH DR15mL PDELAY NAME 
 SECTION: ".init"
   Entry K1 K2 OVER OVER1 P1 P2 P3 P4 R0 R1 R2 R3 FIND SHIFT MATCH DELAY D2 D1 
-  HERE TRANS1 VAR00001 
+  HERE TRANS1 COMWRT4 DATWRT4 DELAYLCD L3 L2 L1 DELAY75 LL3 LL2 LL1 LOOP REMAIN 
+  OVER2 LOOP2 VAR00001 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
@@ -103,6 +119,7 @@ OBJECT LIST SORTED BY ADDRESS
      DR15mH                                    1110       1       1       0   .text       
      DR15mL                                    1111       1       1       0   .text       
      PDELAY                                    1112       1       1       0   .text       
+     NAME                                      1113      12      18       0   .text       
      Entry                                     4000      31      49       0   .init       
      K1                                        4031       C      12       0   .init       
      K2                                        403D       D      13       0   .init       
@@ -124,7 +141,21 @@ OBJECT LIST SORTED BY ADDRESS
      D1                                        40E1       D      13       0   .init       
      HERE                                      40EE       0       0       0   .init       
      TRANS1                                    40EE       7       7       0   .init       
-     VAR00001                                  40F5       2       2       0   .init       
+     COMWRT4                                   40F5      2B      43       0   .init       
+     DATWRT4                                   4120      2B      43       0   .init       
+     DELAYLCD                                  414B       6       6       0   .init       
+     L3                                        4151       5       5       0   .init       
+     L2                                        4156       5       5       0   .init       
+     L1                                        415B      14      20       0   .init       
+     DELAY75                                   416F       6       6       0   .init       
+     LL3                                       4175       5       5       0   .init       
+     LL2                                       417A       5       5       0   .init       
+     LL1                                       417F      55      85       0   .init       
+     LOOP                                      41D4       D      13       0   .init       
+     REMAIN                                    41E1       5       5       0   .init       
+     OVER2                                     41E6       6       6       0   .init       
+     LOOP2                                     41EC      1F      31       0   .init       
+     VAR00001                                  420B       2       2       0   .init       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -147,6 +178,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 3
-Total size of all blocks to be downloaded: 265
+Number of blocks to be downloaded: 4
+Total size of all blocks to be downloaded: 564
 
