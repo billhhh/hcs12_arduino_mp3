@@ -12,7 +12,7 @@ Linker      : SmartLinker V-5.0.40 Build 10203, Jul 23 2010
 *********************************************************************************************
 FILE SECTION
 ---------------------------------------------------------------------------------------------
-serialcom_keypad.asm.o                  Model: SMALL,         Lang: Assembler
+serialcom_keypad_lcd.asm.o              Model: SMALL,         Lang: Assembler
 
 *********************************************************************************************
 STARTUP SECTION
@@ -24,9 +24,9 @@ SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .stack                           256   R/W     0x1000     0x10FF   RAM
-serialcom_keypad.asm__ORG00001         16     R     0x1000     0x100F   .absSeg0
-serialcom_keypad.asm__ORG00002         21     R     0x1110     0x1124   .absSeg1
-serialcom_keypad.asm__ORG00003        525     R     0x4000     0x420C   .absSeg2
+serialcom_keypad_lcd.asm__ORG00001         16     R     0x1000     0x100F   .absSeg0
+serialcom_keypad_lcd.asm__ORG00002         21     R     0x1110     0x1124   .absSeg1
+serialcom_keypad_lcd.asm__ORG00003        525     R     0x4000     0x420C   .absSeg2
 .vectSeg3_vect                     2     R     0xFFFE     0xFFFF   .vectSeg3
 
 Summary of section sizes per section type:
@@ -43,7 +43,7 @@ VECTOR-ALLOCATION SECTION
 OBJECT-ALLOCATION SECTION
      Name               Module                 Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
-MODULE:                 -- serialcom_keypad.asm.o --
+MODULE:                 -- serialcom_keypad_lcd.asm.o --
 - PROCEDURES:
      Entry                                     4000      31      49       0   .init       
      K1                                        4031       C      12       0   .init       
@@ -95,7 +95,7 @@ MODULE:                 -- serialcom_keypad.asm.o --
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
-  serialcom_keypad.asm.o                       0    525     37
+  serialcom_keypad_lcd.asm.o                   0    525     37
   other                                      256      2      0
 
 *********************************************************************************************
