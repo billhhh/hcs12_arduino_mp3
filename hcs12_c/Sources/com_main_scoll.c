@@ -27,6 +27,8 @@ unsigned char calcol = 16;
 
 void main(void) {
  
+    int i;
+    
     //init com
     SCI1BDH=0x00;    //48MHz/2=24Mhz, 24Mhz/16= 1.5MHz, 1.5MHz/9600=156
     SCI1BDL=156;     //Notice the value for Baud Rate
@@ -60,14 +62,25 @@ void main(void) {
   MSDelay(1);
    
  
-   while(1){                              //OPEN WHILE(1)
+   while(1){
+   
+      i = 0;                              //OPEN WHILE(1)
       do{                                 //OPEN do1
          PORTA = PORTA | 0x0F;            //COLUMNS SET HIGH
          row = PORTA & 0xF0;              //READ ROWS
          
-         //scoll the name
-         //DisplayStr(scollName[calcol]);
-         //LShiftStr(scollName[calcol]);
+         if(i>=50) {
+          
+           //scoll the name
+           DisplayStr(scollName[calcol]);
+           LShiftStr(scollName[calcol]);
+           
+           i = 0;
+         }
+         
+         i++;
+         
+         MSDelay(10);
             
       }while(row == 0x00);                //WAIT UNTIL KEY PRESSED //CLOSE do1
 

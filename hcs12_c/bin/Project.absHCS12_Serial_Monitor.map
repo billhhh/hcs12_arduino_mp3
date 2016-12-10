@@ -14,6 +14,7 @@ FILE SECTION
 ---------------------------------------------------------------------------------------------
 mc9s12dg256.c.o                         Model: BANKED,        Lang: ANSI-C
 Start12.c.o                             Model: BANKED,        Lang: ANSI-C
+STRING.C.o (ansibi.lib)                 Model: BANKED,        Lang: ANSI-C
 com_main_scoll.c.o                      Model: BANKED,        Lang: ANSI-C
 
 *********************************************************************************************
@@ -23,7 +24,7 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC015 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x1100     3
+  _Range   pZeroOut       0x1100     768
   _Copy    *toCopyDownBeg 0xC02F
 } _startupData;
 
@@ -34,10 +35,10 @@ Section Name                    Size  Type     From       To       Segment
 .init                             21     R     0xC000     0xC014   ROM_C000
 .startData                        10     R     0xC015     0xC01E   ROM_C000
 .rodata                           16     R     0xC01F     0xC02E   ROM_C000
-.copy                              7     R     0xC02F     0xC035   ROM_C000
-.text                            446     R   0x308000   0x3081BD   PAGE_30
+.copy                            447     R     0xC02F     0xC1ED   ROM_C000
+.text                            734     R   0x308000   0x3082DD   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
-.data                              1   R/W     0x1100     0x1100   RAM
+.data                            766   R/W     0x1100     0x13FD   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -379,12 +380,12 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_17e                   2   N/I      0x17E      0x17F   .absSeg338
 .abs_section_2ae                   2   N/I      0x2AE      0x2AF   .absSeg339
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg340
-.common                            2   R/W     0x1101     0x1102   RAM
+.common                            2   R/W     0x13FE     0x13FF   RAM
 .vectSeg341_vect                   2     R     0xFFFE     0xFFFF   .vectSeg341
 
 Summary of section sizes per section type:
-READ_ONLY (R):         1F6 (dec:      502)
-READ_WRITE (R/W):      103 (dec:      259)
+READ_ONLY (R):         4CE (dec:     1230)
+READ_WRITE (R/W):      400 (dec:     1024)
 NO_INIT (N/I):         190 (dec:      400)
 
 *********************************************************************************************
@@ -426,7 +427,7 @@ MODULE:                 -- mc9s12dg256.c.o --
      _BKP1H                                      2E       1       1       0   .abs_section_2e
      _BKP1L                                      2F       1       1       0   .abs_section_2f
      _PPAGE                                      30       1       1       0   .abs_section_30
-     _PORTK                                      32       1       1       8   .abs_section_32
+     _PORTK                                      32       1       1      16   .abs_section_32
      _DDRK                                       33       1       1       1   .abs_section_33
      _SYNR                                       34       1       1       0   .abs_section_34
      _REFDV                                      35       1       1       0   .abs_section_35
@@ -682,7 +683,7 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXDSR7                                2BB       1       1       0   .abs_section_2bb
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
-     _PORTAB                                      0       2       2      12   .abs_section_0
+     _PORTAB                                      0       2       2      13   .abs_section_0
      _DDRAB                                       2       2       2       2   .abs_section_2
      _PARTID                                     1A       2       2       0   .abs_section_1a
      _TCNT                                       44       2       2       0   .abs_section_44
@@ -749,17 +750,26 @@ MODULE:                 -- Start12.c.o --
      _startupData                              C015       6       6       3   .startData  
 - LABELS:
      __SEG_END_SSTACK                          1100       0       0       1               
+MODULE:                 -- STRING.C.o (ansibi.lib) --
+- PROCEDURES:
+     strlen                                  308029      14      20       2   .text       
+- VARIABLES:
 MODULE:                 -- com_main_scoll.c.o --
 - PROCEDURES:
-     main                                    308029     122     290      17   .text       
-     COMWRT4                                 30814B      4B      75       4   .text       
-     SerTx1                                  308196       9       9       2   .text       
-     MSDelay                                 30819F      1F      31       4   .text       
+     main                                    30803D     15D     349      17   .text       
+     LShiftStr                               30819A      3A      58       2   .text       
+     DisplayStr                              3081D4      31      49       2   .text       
+     CleanScr                                308205      1B      27       2   .text       
+     COMWRT4                                 308220      4B      75       8   .text       
+     DATWRT4                                 30826B      4B      75       2   .text       
+     SerTx1                                  3082B6       9       9       2   .text       
+     MSDelay                                 3082BF      1F      31      12   .text       
 - VARIABLES:
      keypad                                    C01F      10      16       4   .rodata     
-     calcol                                    1100       1       1       1   .data       
-     column                                    1101       1       1       7   .common     
-     row                                       1102       1       1       3   .common     
+     scollName                                 1100     2FD     765       2   .data       
+     calcol                                    13FD       1       1       3   .data       
+     column                                    13FE       1       1       7   .common     
+     row                                       13FF       1       1       5   .common     
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -767,16 +777,18 @@ MODULE STATISTIC
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
   Start12.c.o                                  0     62      0
-  com_main_scoll.c.o                           3    405     16
-  other                                      256     12      7
+  STRING.C.o (ansibi.lib)                      0     20      0
+  com_main_scoll.c.o                         768    673     16
+  other                                      256     12    447
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  Init main COMWRT4 SerTx1 MSDelay 
+  Init strlen main LShiftStr DisplayStr CleanScr COMWRT4 DATWRT4 SerTx1 
+  MSDelay 
 SECTION: ".data"
-  calcol 
+  scollName calcol 
 SECTION: ".init"
   _Startup 
 SECTION: ".rodata"
@@ -1470,7 +1482,7 @@ SECTION: ".common"
 OBJECT LIST SORTED BY ADDRESS
      Name                                      Addr   hSize   dSize     Ref    Section   RLIB
 ---------------------------------------------------------------------------------------------
-     _PORTAB                                      0       2       2      12   .abs_section_0
+     _PORTAB                                      0       2       2      13   .abs_section_0
      _DDRAB                                       2       2       2       2   .abs_section_2
      _PORTE                                       8       1       1       0   .abs_section_8
      _DDRE                                        9       1       1       0   .abs_section_9
@@ -1499,7 +1511,7 @@ OBJECT LIST SORTED BY ADDRESS
      _BKP1H                                      2E       1       1       0   .abs_section_2e
      _BKP1L                                      2F       1       1       0   .abs_section_2f
      _PPAGE                                      30       1       1       0   .abs_section_30
-     _PORTK                                      32       1       1       8   .abs_section_32
+     _PORTK                                      32       1       1      16   .abs_section_32
      _DDRK                                       33       1       1       1   .abs_section_33
      _SYNR                                       34       1       1       0   .abs_section_34
      _REFDV                                      35       1       1       0   .abs_section_35
@@ -1811,37 +1823,160 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
-     calcol                                    1100       1       1       1   .data       
-     column                                    1101       1       1       7   .common     
-     row                                       1102       1       1       3   .common     
+     scollName                                 1100     2FD     765       2   .data       
+     calcol                                    13FD       1       1       3   .data       
+     column                                    13FE       1       1       7   .common     
+     row                                       13FF       1       1       5   .common     
      _Startup                                  C000      15      21       0   .init       
      keypad                                    C01F      10      16       4   .rodata     
      Init                                    308000      29      41       2   .text       
-     main                                    308029     122     290      17   .text       
-     COMWRT4                                 30814B      4B      75       4   .text       
-     SerTx1                                  308196       9       9       2   .text       
-     MSDelay                                 30819F      1F      31       4   .text       
+     strlen                                  308029      14      20       2   .text       
+     main                                    30803D     15D     349      17   .text       
+     LShiftStr                               30819A      3A      58       2   .text       
+     DisplayStr                              3081D4      31      49       2   .text       
+     CleanScr                                308205      1B      27       2   .text       
+     COMWRT4                                 308220      4B      75       8   .text       
+     DATWRT4                                 30826B      4B      75       2   .text       
+     SerTx1                                  3082B6       9       9       2   .text       
+     MSDelay                                 3082BF      1F      31      12   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
-com_main_scoll.c.o:
-  LShiftStr DisplayStr CleanScr DATWRT4 
+STRING.C.o (ansibi.lib):
+  strerror memchr memcmp memcpy2 memcpy _memcpy_8bitCount memmove memset 
+  _memset_clear_8bitCount strset strcat strncat strcpy strncpy strcmp strncmp 
+  strchr strrchr strspn strcspn strpbrk strstr strtok strcoll strxfrm 
 NOT USED VARIABLES
-com_main_scoll.c.o:
-  songName scollName 
+STRING.C.o (ansibi.lib):
+  STRING..1 next.2 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
 ------- ROM-ADDRESS: 0xC02F ---- SIZE       4 ---
 Filling bytes inserted
- 00011100
-------- ROM-ADDRESS: 0xC033 ---- RAM-ADDRESS: 0x1100 ---- SIZE       1 ---
+ 00101100
+------- ROM-ADDRESS: 0xC033 ---- RAM-ADDRESS: 0x1100 ---- SIZE      16 ---
+Name of initialized Object : scollName
+ 313A206661 7465202020 2020202020
+ 20
+------- ROM-ADDRESS: 0xC043 ---- SIZE       4 ---
+Filling bytes inserted
+ 0016112D
+------- ROM-ADDRESS: 0xC047 ---- RAM-ADDRESS: 0x112D ---- SIZE      22 ---
+Name of initialized Object : scollName:45
+ 323A205368 6F636B204D 6520696E74
+ 6F204C6F76 6520
+------- ROM-ADDRESS: 0xC05D ---- SIZE       4 ---
+Filling bytes inserted
+ 0018115A
+------- ROM-ADDRESS: 0xC061 ---- RAM-ADDRESS: 0x115A ---- SIZE      24 ---
+Name of initialized Object : scollName:90
+ 333A206C6F 6E656C7920 6E6F727468
+ 656E206561 72746820
+------- ROM-ADDRESS: 0xC079 ---- SIZE       4 ---
+Filling bytes inserted
+ 001B1187
+------- ROM-ADDRESS: 0xC07D ---- RAM-ADDRESS: 0x1187 ---- SIZE      27 ---
+Name of initialized Object : scollName:135
+ 343A206D6F 737420696D 706F727461
+ 6E74206469 636973696F 6E20
+------- ROM-ADDRESS: 0xC098 ---- SIZE       4 ---
+Filling bytes inserted
+ 001611B4
+------- ROM-ADDRESS: 0xC09C ---- RAM-ADDRESS: 0x11B4 ---- SIZE      22 ---
+Name of initialized Object : scollName:180
+ 353A204265 6175746966 756C20496E
+ 2057686974 6520
+------- ROM-ADDRESS: 0xC0B2 ---- SIZE       4 ---
+Filling bytes inserted
+ 001111E1
+------- ROM-ADDRESS: 0xC0B6 ---- RAM-ADDRESS: 0x11E1 ---- SIZE      17 ---
+Name of initialized Object : scollName:225
+ 363A204C6F 7665205061 7261646973
+ 6520
+------- ROM-ADDRESS: 0xC0C7 ---- SIZE       4 ---
+Filling bytes inserted
+ 0010120E
+------- ROM-ADDRESS: 0xC0CB ---- RAM-ADDRESS: 0x120E ---- SIZE      16 ---
+Name of initialized Object : scollName:270
+ 373A204C61 7075746120 2020202020
+ 20
+------- ROM-ADDRESS: 0xC0DB ---- SIZE       4 ---
+Filling bytes inserted
+ 003E123B
+------- ROM-ADDRESS: 0xC0DF ---- RAM-ADDRESS: 0x123B ---- SIZE      62 ---
+Name of initialized Object : scollName:315
+ 383A204E6F 7468696E67 277320476F
+ 6E6E612043 68616E6765 2054686520
+ 4C6F766520 466F722059 6F75000000
+ 393A206472 65616D2077 656464696E
+ 6720
+------- ROM-ADDRESS: 0xC11D ---- SIZE       4 ---
+Filling bytes inserted
+ 00171295
+------- ROM-ADDRESS: 0xC121 ---- RAM-ADDRESS: 0x1295 ---- SIZE      23 ---
+Name of initialized Object : scollName:405
+ 31303A2052 6967687420 4865726520
+ 5761697469 6E6720
+------- ROM-ADDRESS: 0xC138 ---- SIZE       4 ---
+Filling bytes inserted
+ 001412C2
+------- ROM-ADDRESS: 0xC13C ---- RAM-ADDRESS: 0x12C2 ---- SIZE      20 ---
+Name of initialized Object : scollName:450
+ 31313A204E 6F7720416E 6420466F72
+ 6576657220
+------- ROM-ADDRESS: 0xC150 ---- SIZE       4 ---
+Filling bytes inserted
+ 001812EF
+------- ROM-ADDRESS: 0xC154 ---- RAM-ADDRESS: 0x12EF ---- SIZE      24 ---
+Name of initialized Object : scollName:495
+ 31323A2049 204C6F7665 20596F7520
+ 546F6F204D 75636820
+------- ROM-ADDRESS: 0xC16C ---- SIZE       4 ---
+Filling bytes inserted
+ 0012131C
+------- ROM-ADDRESS: 0xC170 ---- RAM-ADDRESS: 0x131C ---- SIZE      18 ---
+Name of initialized Object : scollName:540
+ 31333A2053 206F66204D 7920486561
+ 727420
+------- ROM-ADDRESS: 0xC182 ---- SIZE       4 ---
+Filling bytes inserted
+ 00121349
+------- ROM-ADDRESS: 0xC186 ---- RAM-ADDRESS: 0x1349 ---- SIZE      18 ---
+Name of initialized Object : scollName:585
+ 31343A204B 6973732054 6865205261
+ 696E20
+------- ROM-ADDRESS: 0xC198 ---- SIZE       4 ---
+Filling bytes inserted
+ 00151376
+------- ROM-ADDRESS: 0xC19C ---- RAM-ADDRESS: 0x1376 ---- SIZE      21 ---
+Name of initialized Object : scollName:630
+ 31353A2045 6E64206F66 2074686520
+ 776F726C64 20
+------- ROM-ADDRESS: 0xC1B1 ---- SIZE       4 ---
+Filling bytes inserted
+ 001913A3
+------- ROM-ADDRESS: 0xC1B5 ---- RAM-ADDRESS: 0x13A3 ---- SIZE      25 ---
+Name of initialized Object : scollName:675
+ 31363A20A4 A2A4CAA4BF A4C0A4B1BC
+ FBA4C4A4E1 A4C6A4EB20
+------- ROM-ADDRESS: 0xC1CE ---- SIZE       4 ---
+Filling bytes inserted
+ 001513D0
+------- ROM-ADDRESS: 0xC1D2 ---- RAM-ADDRESS: 0x13D0 ---- SIZE      21 ---
+Name of initialized Object : scollName:720
+ 48656C6C6F 2C20706C65 6173652073
+ 656C656374 20
+------- ROM-ADDRESS: 0xC1E7 ---- SIZE       4 ---
+Filling bytes inserted
+ 000113FD
+------- ROM-ADDRESS: 0xC1EB ---- RAM-ADDRESS: 0x13FD ---- SIZE       1 ---
 Name of initialized Object : calcol
  10
-------- ROM-ADDRESS: 0xC034 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC1EC ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -1851,9 +1986,14 @@ OBJECT-DEPENDENCIES SECTION
 _Startup                  USES __SEG_END_SSTACK Init main 
 Init                      USES _startupData 
 main                      USES _SCI1BD _SCI1CR1 _SCI1CR2 _DDRAB _DDRJ _PTJ 
-                                _DDRP _PTP _DDRK COMWRT4 main _PORTAB column row 
-                                keypad calcol SerTx1 MSDelay 
+                                _DDRP _PTP _DDRK COMWRT4 main _PORTAB row calcol 
+                                scollName DisplayStr LShiftStr column keypad SerTx1 
+                                MSDelay 
+LShiftStr                 USES strlen 
+DisplayStr                USES CleanScr DATWRT4 MSDelay 
+CleanScr                  USES COMWRT4 MSDelay 
 COMWRT4                   USES _PORTK MSDelay 
+DATWRT4                   USES _PORTK MSDelay 
 SerTx1                    USES _SCI1SR1 _SCI1DRL 
 
 *********************************************************************************************
@@ -1866,6 +2006,24 @@ DEPENDENCY TREE
  |  +- COMWRT4             
  |  |  | 
  |  |  +- MSDelay             
+ |  |       
+ |  +- DisplayStr          
+ |  |  | 
+ |  |  +- CleanScr            
+ |  |  |  | 
+ |  |  |  +- COMWRT4              (see above)
+ |  |  |  |  
+ |  |  |  +- MSDelay              (see above)
+ |  |  |     
+ |  |  +- DATWRT4             
+ |  |  |  | 
+ |  |  |  +- MSDelay              (see above)
+ |  |  |     
+ |  |  +- MSDelay              (see above)
+ |  |     
+ |  +- LShiftStr           
+ |  |  | 
+ |  |  +- strlen              
  |  |       
  |  +- SerTx1              
  |  |    
@@ -1884,5 +2042,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 502
+Total size of all blocks to be downloaded: 1230
 
